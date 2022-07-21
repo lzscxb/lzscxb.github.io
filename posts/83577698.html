@@ -1,0 +1,310 @@
+<!DOCTYPE html><html lang="en_US" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><title>Windows11 安装Arch Linux WSL2 记录 | 白日醒梦</title><meta name="keywords" content="白日醒梦,白日醒梦的博客,LzsCxb,lzscxb,靓仔帅,靓仔瘦,靓仔,博客,lzscxb blog,靓仔博客,lzscxb github,冯仁贵"><meta name="author" content="LzsCxb"><meta name="copyright" content="LzsCxb"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="安装 WSL2 启用子系统和虚拟机平台 然后重启系统  WSL 2 要求系统版本应该在 Windows 10, Version 2004, Build 19041 及以上。以管理员身份打开 powershell，运行如下命令以启动需要的组件： 12dism.exe &#x2F;online &#x2F;enable-feature &#x2F;featurename:Microsoft-Windows-Subsystem-Li"><meta property="og:type" content="article"><meta property="og:title" content="Windows11 安装Arch Linux WSL2 记录"><meta property="og:url" content="https://www.lzscxb.cn/posts/83577698.html"><meta property="og:site_name" content="白日醒梦"><meta property="og:description" content="安装 WSL2 启用子系统和虚拟机平台 然后重启系统  WSL 2 要求系统版本应该在 Windows 10, Version 2004, Build 19041 及以上。以管理员身份打开 powershell，运行如下命令以启动需要的组件： 12dism.exe &#x2F;online &#x2F;enable-feature &#x2F;featurename:Microsoft-Windows-Subsystem-Li"><meta property="og:locale" content="en_US"><meta property="og:image" content="https://minio.lzscxb.cn/picture/images/typora/default_bg.png"><meta property="article:published_time" content="2021-07-02T05:46:00.000Z"><meta property="article:modified_time" content="2022-07-21T08:47:32.675Z"><meta property="article:author" content="LzsCxb"><meta property="article:tag" content="白日醒梦,白日醒梦的博客,LzsCxb,lzscxb,靓仔帅,靓仔瘦,靓仔,博客,lzscxb blog,靓仔博客,lzscxb github,冯仁贵"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://minio.lzscxb.cn/picture/images/typora/default_bg.png"><link rel="shortcut icon" href="https://minio.lzscxb.cn/picture/images/favicon.png"><link rel="canonical" href="https://www.lzscxb.cn/posts/83577698"><link rel="preconnect" href="//cdn.jsdelivr.net"><link rel="preconnect" href="//hm.baidu.com"><link rel="preconnect" href="//busuanzi.ibruce.info"><meta name="google-site-verification" content="yxs-MDGXfaSf--WINcagRK2sgYnQkfmZ32vGrP_21DY"><meta name="baidu-site-verification" content="code-RMbIP73TrL"><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload='this.media="all"'><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload='this.media="all"'><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload='this.media="all"'><script>var _hmt=_hmt||[];!function(){var e=document.createElement("script");e.src="https://hm.baidu.com/hm.js?c21959a450b3af3a7a172860d40b96c9";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)}()</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"We didn't find any results for the search: ${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: 'days',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: {"limitCount":800,"languages":{"author":"Author: LzsCxb","link":"Link: ","source":"Source: 白日醒梦","info":"Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source."}},
+  lightbox: 'mediumZoom',
+  Snackbar: {"chs_to_cht":"Traditional Chinese Activated Manually","cht_to_chs":"Simplified Chinese Activated Manually","day_to_night":"Dark Mode Activated Manually","night_to_day":"Light Mode Activated Manually","bgLight":"#49b1f5","bgDark":"#121212","position":"top-center"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE={title:"Windows11 安装Arch Linux WSL2 记录",isPost:!0,isHome:!1,isHighlightShrink:!1,isToc:!0,postUpdate:"2022-07-21 16:47:32"}</script><noscript><style type="text/css">#nav{opacity:1}.justified-gallery img{opacity:1}#post-meta time,#recent-posts time{display:inline!important}</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.css" media="print" onload='this.media="all"'><meta name="generator" content="Hexo 6.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://minio.lzscxb.cn/picture/images/avatar.png" onerror='onerror=null,src="/img/friend_404.gif"' alt="avatar"></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">101</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">30</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">13</div></a></div><hr><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i> <span>Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i> <span>Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i> <span>Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i> <span>Categories</span></a></div><div class="menus_item"><a class="site-page" href="/message/"><i class="fa-fw fas fa-heart"></i> <span>Message</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i> <span>About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image:url(https://minio.lzscxb.cn/picture/images/typora/default_bg.png)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">白日醒梦</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i> <span>Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i> <span>Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i> <span>Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i> <span>Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i> <span>Categories</span></a></div><div class="menus_item"><a class="site-page" href="/message/"><i class="fa-fw fas fa-heart"></i> <span>Message</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i> <span>About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Windows11 安装Arch Linux WSL2 记录</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-07-02T05:46:00.000Z" title="Created 2021-07-02 13:46:00">2021-07-02</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2022-07-21T08:47:32.675Z" title="Updated 2022-07-21 16:47:32">2022-07-21</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Windows/">Windows</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">Word count:</span><span class="word-count">1.2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">Reading time:</span><span>4min</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Windows11 安装Arch Linux WSL2 记录"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="安装-WSL2"><a href="#安装-WSL2" class="headerlink" title="安装 WSL2"></a>安装 WSL2</h1><blockquote><p>启用子系统和虚拟机平台 然后重启系统<br><img src="https://cdn.jsdelivr.net/gh/lzscxb/Picture/images/2354934-20210701231036875-548285353.png" alt="image"></p></blockquote><p>WSL 2 要求系统版本应该在 Windows 10, Version 2004, Build 19041 及以上。<br>以管理员身份打开 powershell，运行如下命令以启动需要的组件：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart</span><br><span class="line">dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart</span><br></pre></td></tr></table></figure><p>然后重启。并且在 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/yuk7/ArchWSL" title="此处">此处</a> 下载并安装适用于 x64 计算机的最新 WSL2 Linux 内核更新包。<br>打开 powershell，运行如下命令以将 wsl 的默认版本设置为 WSL 2：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wsl --set-default-version 2</span><br></pre></td></tr></table></figure><p>更新WSL</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wsl.exe --update</span><br></pre></td></tr></table></figure><h1 id="安装-Arch-WSL"><a href="#安装-Arch-WSL" class="headerlink" title="安装 Arch WSL"></a>安装 Arch WSL</h1><p>在<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/yuk7/ArchWSL/releases/latest" title="yuk7/ArchWSL - releases">yuk7/ArchWSL - releases</a>下载 Arch.appx / Arch.zip，解压，双击 Arch.exe 进行安装。详见<a target="_blank" rel="noopener external nofollow noreferrer" href="https://wsldl-pg.github.io/ArchW-docs/locale/zh-CN/" title="ArchWSL documentation">ArchWSL documentation</a>。</p><h1 id="更换国内镜像源"><a href="#更换国内镜像源" class="headerlink" title="更换国内镜像源"></a>更换国内镜像源</h1><blockquote><p>PS: 以下部分都以 root 用户身份运行命令</p></blockquote><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">passwd # 设置密码</span><br><span class="line"></span><br><span class="line"># 设置软件源</span><br><span class="line">echo &#x27;Server = https://mirrors.tuna.tsinghua.edu.cn/archlinux/$repo/os/$arch&#x27; &gt;&gt; /etc/pacman.d/mirrorlist</span><br><span class="line">echo &#x27;Server = https://mirrors.neusoft.edu.cn/archlinux/$repo/os/$arch&#x27; &gt; /etc/pacman.d/mirrorlist</span><br><span class="line"></span><br></pre></td></tr></table></figure><h1 id="启用-multilib-库"><a href="#启用-multilib-库" class="headerlink" title="启用 multilib 库"></a>启用 multilib 库</h1><p>multilib 库包含 64 位系统中需要的 32 位软件和库。</p><p>vim /etc/pacman.conf，取消这几行的注释：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[multilib]</span><br><span class="line">Include = /etc/pacman.d/mirrorlist</span><br></pre></td></tr></table></figure><p><strong>并且取消该文件中 #Color 这一行的注释，以启用彩色输出。</strong></p><h1 id="添加-archlinuxcn-源"><a href="#添加-archlinuxcn-源" class="headerlink" title="添加 archlinuxcn 源"></a>添加 archlinuxcn 源</h1><blockquote><p>Arch Linux 中文社区仓库 是由 Arch Linux 中文社区驱动的非官方用户仓库。包含中文用户常用软件、工具、字体/美化包等。</p></blockquote><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/pacman.conf</span><br></pre></td></tr></table></figure><p>在文件末尾加上：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[archlinuxcn]</span><br><span class="line">Server = https://mirrors.aliyun.com/archlinuxcn/$arch</span><br></pre></td></tr></table></figure><blockquote><p>其他的见 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/archlinuxcn/mirrorlist-repo">https://github.com/archlinuxcn/mirrorlist-repo</a> 最好是用自己学校的</p></blockquote><p>然后：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 初始化 keyring</span><br><span class="line">pacman-key --init</span><br><span class="line">pacman-key --populate</span><br><span class="line">pacman -Syu # 更新</span><br><span class="line">pacman -S archlinuxcn-keyring</span><br><span class="line">pacman -Syy # 更新</span><br></pre></td></tr></table></figure><h1 id="创建用户"><a href="#创建用户" class="headerlink" title="创建用户"></a>创建用户</h1><blockquote><p>注：此处的 yourname 是你要创建的用户名</p></blockquote><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">1. 新建用户。-m 为用户创建家目录；-G wheel 将用户添加到 wheel 用户组</span><br><span class="line">useradd -m -G wheel yourname</span><br><span class="line"></span><br><span class="line">2. 设置密码</span><br><span class="line">passwd yourname</span><br><span class="line"></span><br><span class="line">3. 因为 visudo 需要 vi</span><br><span class="line">ln -s /usr/bin/vim /usr/bin/vi</span><br><span class="line"></span><br><span class="line">4. 编辑 /etc/sudoers</span><br><span class="line">visudo</span><br><span class="line"></span><br><span class="line">将以下两行行首的#去掉</span><br><span class="line"># %wheel ALL=(ALL) ALL</span><br><span class="line"># %wheel ALL=(ALL) NOPASSWD: ALL</span><br></pre></td></tr></table></figure><p>在 powershell 中进入到 Arch.exe 所在文件夹，设置 WSL 默认登陆用户和默认的 WSL：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">.\Arch.exe config --default-user yourname</span><br><span class="line">wsl -s Arch</span><br></pre></td></tr></table></figure><p>重新打开，就是在 yourname 用户了。</p><h1 id="安装常用软件"><a href="#安装常用软件" class="headerlink" title="安装常用软件"></a>安装常用软件</h1><h2 id="安装-yay"><a href="#安装-yay" class="headerlink" title="安装 yay"></a>安装 yay</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S --needed base-devel</span><br></pre></td></tr></table></figure><p>出现:: fakeroot is in IgnorePkg/IgnoreGroup. Install anyway? [Y/n]，选 n，接下来一直回车即可。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S --needed yay</span><br></pre></td></tr></table></figure><h2 id="yay-换源"><a href="#yay-换源" class="headerlink" title="yay 换源"></a>yay 换源</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yay --aururl &quot;https://aur.tuna.tsinghua.edu.cn&quot; --save</span><br></pre></td></tr></table></figure><h1 id="安装-ZSH"><a href="#安装-ZSH" class="headerlink" title="安装 ZSH"></a>安装 ZSH</h1><h2 id="安装-Terminal-字体"><a href="#安装-Terminal-字体" class="headerlink" title="安装 Terminal 字体"></a>安装 Terminal 字体</h2><p>给 windows 安装以下字体，并且改变 windows terminal 的字体设置(这里就不细说了)：<br><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/Meslo/S/Regular/complete" title="MesloLGS NF">MesloLGS NF</a> powerlevel10k 作者推荐<br><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/FiraCode/Regular/complete" title="FiraCode NF">FiraCode NF</a> 我更喜欢这个</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S zsh</span><br></pre></td></tr></table></figure><h2 id="安装-OH-MY-ZSH"><a href="#安装-OH-MY-ZSH" class="headerlink" title="安装 OH MY ZSH"></a>安装 OH MY ZSH</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 第一步 → 把 oh-my-zsh 项目 Clone 下来：</span><br><span class="line"></span><br><span class="line">git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh</span><br><span class="line"># 第二步 → 复制 .zshrc</span><br><span class="line"></span><br><span class="line">cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc</span><br><span class="line"># 第三步 → 更改你的默认 Shell</span><br><span class="line">chsh -s /bin/zsh</span><br></pre></td></tr></table></figure><h2 id="推荐ZSH插件"><a href="#推荐ZSH插件" class="headerlink" title="推荐ZSH插件"></a>推荐ZSH插件</h2><p>可以参考</p><blockquote><p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hufangyun.com/2017/zsh-plugin/">https://hufangyun.com/2017/zsh-plugin/</a></p></blockquote><h1 id="使用-proxychains-代理终端程序"><a href="#使用-proxychains-代理终端程序" class="headerlink" title="使用 proxychains 代理终端程序"></a>使用 proxychains 代理终端程序</h1><blockquote><p>可以使用 windows 的 qv②ray/clash/ssr 等代理软件来代理 wsl 中的程序！先安装 proxychains：</p></blockquote><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S proxychains-ng</span><br></pre></td></tr></table></figure><p>首先，sudo vim /etc/proxychains.conf，将proxy_dns这一行注释。（这样能够让 proxychains 代理 yay）</p><p>如果用的是 WSL 1，那就 sudo vim /etc/proxychains.conf，将最后一行的 socks4 127.0.0.1 9095 修改为：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">socks5 127.0.0.1 1080</span><br></pre></td></tr></table></figure><p>这个 1080 是我的 ssr 的 HTTP 端口号，改成你自己的。如果你用的是 WSL 2，由于目前 WSL 2 和 windows 的 ip 不同，我们需要先cp -f /etc/proxychains.conf <del>/.proxychains.conf，然后在</del>/.zshrc中添加以下内容：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># 获取windows的ip</span><br><span class="line">export WIN_IP=`cat /etc/resolv.conf | grep nameserver | awk &#x27;&#123;print $2&#125;&#x27;`</span><br><span class="line"># 删除 ~/.proxychains.conf 中 [ProxyList] 所在行到文件末尾的全部内容</span><br><span class="line">sed -i &#x27;/\[ProxyList\]/,$d&#x27; ~/.proxychains.conf</span><br><span class="line"># 往文件末尾添加socks5/http设置，这个 1080 是我的 qv②ray 的 socks5/http 端口号，改成你自己的</span><br><span class="line">echo &#x27;[ProxyList]\nhttp &#x27;$&#123;WIN_IP&#125;&#x27; 1080&#x27; &gt;&gt; ~/.proxychains.conf</span><br><span class="line"># 设置别名；使用 ~/.proxychains.conf 作为proxychains的配置文件；让proxychains quiet（不输出一大串东西）</span><br><span class="line">alias pc=&#x27;proxychains4 -q -f ~/.proxychains.conf&#x27;</span><br><span class="line"># 用来手动开关代理，建议走 http 协议，因为 wget 不支持 socks5</span><br><span class="line">my_proxy=http://$&#123;WIN_IP&#125;:1080</span><br><span class="line">alias p-on=&#x27;export all_proxy=&#x27;$&#123;my_proxy&#125;&#x27; http_proxy=&#x27;$&#123;my_proxy&#125;&#x27; https_proxy=&#x27;$&#123;my_proxy&#125;&#x27;&#x27;</span><br><span class="line">alias p-off=&#x27;unset all_proxy http_proxy https_proxy&#x27;</span><br></pre></td></tr></table></figure><p>然后：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 在 yourname 用户中</span><br><span class="line">sudo ln -s ~/.proxychains.conf /root/.proxychains.conf</span><br><span class="line">source ~/.zshrc</span><br></pre></td></tr></table></figure><p>如果你发现还是无法代理，那可能是因为你的代理软件没打开<code>允许来自局域网的连接</code>选项</p><blockquote><p>注：pc ping google.com是没有效果的，因为 proxychains 只会代理 TCP。</p></blockquote><h1 id="Tips"><a href="#Tips" class="headerlink" title="Tips"></a>Tips</h1><p>ArchLinuxx目录 从文件资源管理器 <code>\\wsl$</code> 访问</p><p>本文到这里就结束了，有疑问欢迎评论哦😉</p></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author:</span> <span class="post-copyright-info"><a href="https://www.lzscxb.cn">LzsCxb</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link:</span> <span class="post-copyright-info"><a href="https://www.lzscxb.cn/posts/83577698.html">https://www.lzscxb.cn/posts/83577698.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice:</span> <span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://minio.lzscxb.cn/picture/images/typora/default_bg.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload='this.media="all"'><script src="https://cdn.jsdelivr.net/gh/overtrue/share.js@master/dist/js/social-share.min.js" defer="defer"></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/3956981598.html"><img class="prev-cover" src="https://minio.lzscxb.cn/picture/images/typora/default_bg.png" onerror='onerror=null,src="/img/404.jpg"' alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">详解二进制和十进制的转换</div></div></a></div><div class="next-post pull-right"><a href="/posts/3181363109.html"><img class="next-cover" src="https://minio.lzscxb.cn/picture/images/typora/default_bg.png" onerror='onerror=null,src="/img/404.jpg"' alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">ThinkPHP无限级分类(递归)</div></div></a></div></nav><hr><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i> <span>Comment</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-WSL2"><span class="toc-number">1.</span> <span class="toc-text">安装 WSL2</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-Arch-WSL"><span class="toc-number">2.</span> <span class="toc-text">安装 Arch WSL</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9B%B4%E6%8D%A2%E5%9B%BD%E5%86%85%E9%95%9C%E5%83%8F%E6%BA%90"><span class="toc-number">3.</span> <span class="toc-text">更换国内镜像源</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%90%AF%E7%94%A8-multilib-%E5%BA%93"><span class="toc-number">4.</span> <span class="toc-text">启用 multilib 库</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0-archlinuxcn-%E6%BA%90"><span class="toc-number">5.</span> <span class="toc-text">添加 archlinuxcn 源</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E7%94%A8%E6%88%B7"><span class="toc-number">6.</span> <span class="toc-text">创建用户</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6"><span class="toc-number">7.</span> <span class="toc-text">安装常用软件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-yay"><span class="toc-number">7.1.</span> <span class="toc-text">安装 yay</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#yay-%E6%8D%A2%E6%BA%90"><span class="toc-number">7.2.</span> <span class="toc-text">yay 换源</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-ZSH"><span class="toc-number">8.</span> <span class="toc-text">安装 ZSH</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-Terminal-%E5%AD%97%E4%BD%93"><span class="toc-number">8.1.</span> <span class="toc-text">安装 Terminal 字体</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-OH-MY-ZSH"><span class="toc-number">8.2.</span> <span class="toc-text">安装 OH MY ZSH</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A8%E8%8D%90ZSH%E6%8F%92%E4%BB%B6"><span class="toc-number">8.3.</span> <span class="toc-text">推荐ZSH插件</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-proxychains-%E4%BB%A3%E7%90%86%E7%BB%88%E7%AB%AF%E7%A8%8B%E5%BA%8F"><span class="toc-number">9.</span> <span class="toc-text">使用 proxychains 代理终端程序</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Tips"><span class="toc-number">10.</span> <span class="toc-text">Tips</span></a></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2022 By LzsCxb</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="Scroll To Comments"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i> <span>Loading the Database</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"></div></div><hr><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (true){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'MLFHwQsVy8T94yf3CekJVLEY-gzGzoHsz',
+      appKey: 'VpK0SLV9ANnueJcFFTh16dx7',
+      avatar: 'monsterid',
+      serverURLs: 'https://mlfhwqsv.lc-cn-n1-shared.com',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script src="https://cdn.jsdelivr.net/npm/blueimp-md5/js/md5.min.js"></script><script>window.addEventListener('load', () => {
+  const changeContent = (content) => {
+    if (content === '') return content
+
+    content = content.replace(/<img.*?src="(.*?)"?[^\>]+>/ig, '[image]') // replace image link
+    content = content.replace(/<a[^>]+?href=["']?([^"']+)["']?[^>]*>([^<]+)<\/a>/gi, '[link]') // replace url
+    content = content.replace(/<pre><code>.*?<\/pre>/gi, '[code]') // replace code
+    content = content.replace(/<[^>]+>/g,"") // remove html tag
+
+    if (content.length > 150) {
+      content = content.substring(0,150) + '...'
+    }
+    return content
+  }
+
+  const getIcon = (icon, mail) => {
+    if (icon) return icon
+    let defaultIcon = '?d=monsterid'
+    let iconUrl = `https://gravatar.loli.net/avatar/${md5(mail.toLowerCase()) + defaultIcon}`
+    return iconUrl
+  }
+
+  const generateHtml = array => {
+    let result = ''
+
+    if (array.length) {
+      for (let i = 0; i < array.length; i++) {
+        result += '<div class=\'aside-list-item\'>'
+
+        if (true) {
+          const name = 'src'
+          result += `<a href='${array[i].url}' class='thumbnail'><img ${name}='${array[i].avatar}' alt='${array[i].nick}'></a>`
+        }
+
+        result += `<div class='content'>
+        <a class='comment' href='${array[i].url}' title='${array[i].content}'>${array[i].content}</a>
+        <div class='name'><span>${array[i].nick} / </span><time datetime="${array[i].date}">${btf.diffDate(array[i].date, true)}</time></div>
+        </div></div>`
+      }
+    } else {
+      result += 'No Comment'
+    }
+
+    let $dom = document.querySelector('#card-newest-comments .aside-list')
+    $dom.innerHTML= result
+    window.lazyLoadInstance && window.lazyLoadInstance.update()
+    window.pjax && window.pjax.refresh($dom)
+  }
+
+  const getComment = () => {
+    const serverURL = 'https://mlfhwqsv.lc-cn-n1-shared.com'
+
+    var settings = {
+      "method": "GET",
+      "headers": {
+        "X-LC-Id": 'MLFHwQsVy8T94yf3CekJVLEY-gzGzoHsz',
+        "X-LC-Key": 'VpK0SLV9ANnueJcFFTh16dx7',
+        "Content-Type": "application/json"
+      },
+    }
+
+    fetch(`${serverURL}/1.1/classes/Comment?limit=6&order=-createdAt`,settings)
+      .then(response => response.json())
+      .then(data => {
+        const valineArray = data.results.map(function (e) {
+          return {
+            'avatar': getIcon(e.QQAvatar, e.mail),
+            'content': changeContent(e.comment),
+            'nick': e.nick,
+            'url': e.url + '#' + e.objectId,
+            'date': e.updatedAt,
+          }
+        })
+        saveToLocal.set('valine-newest-comments', JSON.stringify(valineArray), 10/(60*24))
+        generateHtml(valineArray)
+      }).catch(e => {
+        const $dom = document.querySelector('#card-newest-comments .aside-list')
+        $dom.innerHTML= "Unable to get the data, please make sure the settings are correct."
+      }) 
+  }
+
+  const newestCommentInit = () => {
+    if (document.querySelector('#card-newest-comments .aside-list')) {
+      const data = saveToLocal.get('valine-newest-comments')
+      if (data) {
+        generateHtml(JSON.parse(data))
+      } else {
+        getComment()
+      }
+    }
+  }
+
+  newestCommentInit()
+  document.addEventListener('pjax:complete', newestCommentInit)
+})</script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
+  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
+
+  typeof preloader === 'object' && preloader.initLoading()
+  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script data-pjax>function butterfly_footer_beautify_injector_config(){var e=document.getElementById("footer-wrap");console.log("已挂载butterfly_footer_beautify"),e.insertAdjacentHTML("beforeend",'<p id="ghbdages"><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow noreferrer" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title=""><img src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&amp;logo=Claris" alt=""/></a><a class="github-badge" target="_blank" href="https://github.com/lzscxb/" rel="external nofollow noreferrer" style="margin-inline:5px" data-title="LzsCxb Github" title=""><img src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub" alt=""/></a><a class="github-badge" target="_blank" href="https://beian.miit.gov.cn" rel="external nofollow noreferrer" style="margin-inline:5px" data-title="本站已在工信部备案，备案号：桂ICP备2022003172号-1" title=""><img src="https://img.shields.io/badge/%E6%A1%82ICP%E5%A4%87-2022003172%E5%8F%B7--1-pink?color=ff69b4&amp;logo=data:image/png;base64,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" alt=""/></a></p>')}for(var elist="null".split(","),cpage=location.pathname,epage="all",flag=0,i=0;i<elist.length;i++)cpage.includes(elist[i])&&flag++;"all"===epage&&0==flag?butterfly_footer_beautify_injector_config():epage===cpage&&butterfly_footer_beautify_injector_config()</script></body></html>

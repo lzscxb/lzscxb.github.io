@@ -1,0 +1,310 @@
+<!DOCTYPE html><html lang="en_US" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><title>Java-多线程 | 白日醒梦</title><meta name="keywords" content="Java"><meta name="author" content="LzsCxb"><meta name="copyright" content="LzsCxb"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="基本概念程序和进程的概念 程序 - 数据结构 + 算法，主要指存放在硬盘上的可执行文件。 进程 - 主要指运行在内存中的可执行文件。 目前主流的操作系统都支持多进程，为了让操作系统同时可以执行多个任务，但进程是重量级的，也就是新建一个进程会消耗CPU和内存空间等系统资源，因此进程的数量比较局限。  线程的概念 为了解决上述问题就提岀线程的概念，线程就是进程内部的程序流，也就是说操作系统内部支持多进"><meta property="og:type" content="article"><meta property="og:title" content="Java-多线程"><meta property="og:url" content="https://www.lzscxb.cn/posts/3237902709.html"><meta property="og:site_name" content="白日醒梦"><meta property="og:description" content="基本概念程序和进程的概念 程序 - 数据结构 + 算法，主要指存放在硬盘上的可执行文件。 进程 - 主要指运行在内存中的可执行文件。 目前主流的操作系统都支持多进程，为了让操作系统同时可以执行多个任务，但进程是重量级的，也就是新建一个进程会消耗CPU和内存空间等系统资源，因此进程的数量比较局限。  线程的概念 为了解决上述问题就提岀线程的概念，线程就是进程内部的程序流，也就是说操作系统内部支持多进"><meta property="og:locale" content="en_US"><meta property="og:image" content="https://minio.lzscxb.cn/picture/images/typora/default_bg.png"><meta property="article:published_time" content="2021-09-09T03:15:00.000Z"><meta property="article:modified_time" content="2022-07-21T08:47:32.671Z"><meta property="article:author" content="LzsCxb"><meta property="article:tag" content="Java"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://minio.lzscxb.cn/picture/images/typora/default_bg.png"><link rel="shortcut icon" href="https://minio.lzscxb.cn/picture/images/favicon.png"><link rel="canonical" href="https://www.lzscxb.cn/posts/3237902709"><link rel="preconnect" href="//cdn.jsdelivr.net"><link rel="preconnect" href="//hm.baidu.com"><link rel="preconnect" href="//busuanzi.ibruce.info"><meta name="google-site-verification" content="yxs-MDGXfaSf--WINcagRK2sgYnQkfmZ32vGrP_21DY"><meta name="baidu-site-verification" content="code-RMbIP73TrL"><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload='this.media="all"'><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload='this.media="all"'><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload='this.media="all"'><script>var _hmt=_hmt||[];!function(){var e=document.createElement("script");e.src="https://hm.baidu.com/hm.js?c21959a450b3af3a7a172860d40b96c9";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)}()</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"We didn't find any results for the search: ${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: 'days',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: {"limitCount":800,"languages":{"author":"Author: LzsCxb","link":"Link: ","source":"Source: 白日醒梦","info":"Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source."}},
+  lightbox: 'mediumZoom',
+  Snackbar: {"chs_to_cht":"Traditional Chinese Activated Manually","cht_to_chs":"Simplified Chinese Activated Manually","day_to_night":"Dark Mode Activated Manually","night_to_day":"Light Mode Activated Manually","bgLight":"#49b1f5","bgDark":"#121212","position":"top-center"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE={title:"Java-多线程",isPost:!0,isHome:!1,isHighlightShrink:!1,isToc:!0,postUpdate:"2022-07-21 16:47:32"}</script><noscript><style type="text/css">#nav{opacity:1}.justified-gallery img{opacity:1}#post-meta time,#recent-posts time{display:inline!important}</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.css" media="print" onload='this.media="all"'><meta name="generator" content="Hexo 6.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://minio.lzscxb.cn/picture/images/avatar.png" onerror='onerror=null,src="/img/friend_404.gif"' alt="avatar"></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">101</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">30</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">13</div></a></div><hr><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i> <span>Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i> <span>Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i> <span>Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i> <span>Categories</span></a></div><div class="menus_item"><a class="site-page" href="/message/"><i class="fa-fw fas fa-heart"></i> <span>Message</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i> <span>About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image:url(https://minio.lzscxb.cn/picture/images/typora/default_bg.png)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">白日醒梦</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i> <span>Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i> <span>Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i> <span>Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i> <span>Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i> <span>Categories</span></a></div><div class="menus_item"><a class="site-page" href="/message/"><i class="fa-fw fas fa-heart"></i> <span>Message</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i> <span>About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Java-多线程</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-09-09T03:15:00.000Z" title="Created 2021-09-09 11:15:00">2021-09-09</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2022-07-21T08:47:32.671Z" title="Updated 2022-07-21 16:47:32">2022-07-21</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Java/">Java</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">Word count:</span><span class="word-count">2.1k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">Reading time:</span><span>7min</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Java-多线程"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h1><h2 id="程序和进程的概念"><a href="#程序和进程的概念" class="headerlink" title="程序和进程的概念"></a>程序和进程的概念</h2><ul><li>程序 - 数据结构 + 算法，主要指存放在硬盘上的可执行文件。</li><li>进程 - 主要指运行在内存中的可执行文件。</li><li>目前主流的操作系统都支持多进程，为了让操作系统同时可以执行多个任务，但进程是重量级的，也就是新建一个进程会消耗CPU和内存空间等系统资源，因此进程的数量比较局限。</li></ul><h2 id="线程的概念"><a href="#线程的概念" class="headerlink" title="线程的概念"></a>线程的概念</h2><ul><li>为了解决上述问题就提岀线程的概念，线程就是进程内部的程序流，也就是说操作系统内部支持多进程的，而每个进程的内部又是支持多线程的，线程是轻量的，新建线程会共享所在进程的系统资源，因此目前主流的开发都是采用多线程。</li><li>多线程是采用时间片轮转法来保证多个线程的并发执行，所谓并发就是指宏观并行微观串行的机制。</li></ul><h1 id="线程的创建"><a href="#线程的创建" class="headerlink" title="线程的创建"></a>线程的创建</h1><h2 id="Thread类的概念"><a href="#Thread类的概念" class="headerlink" title="Thread类的概念"></a>Thread类的概念</h2><ul><li><code>java.lang.Thread</code> 类代表线程，任何线程对象都是 Thread类(子类)的实例。</li><li>Thread 类是线程的模板，封装了复杂的线程开启等操作，封装了操作系统的差异性。</li></ul><h2 id="创建方式"><a href="#创建方式" class="headerlink" title="创建方式"></a>创建方式</h2><ol><li>自定义类继承 Thread 类并重写 run 方法，然后创建该类的对象调用 start 方法</li><li>自定义类实现 Runnable 接口并重写 run 方法，创建该类的对象作为实参来构造 Thread 类型的对象，然后使用Thread 类型的对象调用 start 方法。</li></ol><h2 id="相关的方法"><a href="#相关的方法" class="headerlink" title="相关的方法"></a>相关的方法</h2><table><thead><tr><th>方法声明</th><th>功能介绍</th></tr></thead><tbody><tr><td>Thread()</td><td>使用无参的方式构造对象</td></tr><tr><td>Thread(String name)</td><td>根据参数指定的名称来构造对象</td></tr><tr><td>Thread(Runnable target)</td><td>根据参数指定的引用来构造对象，其中 Runnable 是个接口类型</td></tr><tr><td>Thread(Runnable target， String name)</td><td>根据参数指定引用和名称来构造对象</td></tr><tr><td>void run()</td><td>若使用 Runnable引用构造了线程对象，调用该方法时最终调用接口中的版本<br>若没有使用 Runnable引用构造线程对象，调用该方法时则啥也不做</td></tr><tr><td>void start()</td><td>用于启动线程，Java虚拟机会自动调用该线程的run方法</td></tr></tbody></table><h2 id="执行流程"><a href="#执行流程" class="headerlink" title="执行流程"></a>执行流程</h2><ul><li>执行main方法的线程叫做主线程，执行 run 方法的线程叫做新线程 / 子线程。</li><li>main方法是程序的入口，对于 start 方法之前的代码来说，由主线程执行一次，当 start 方法调用成功后线程的数由 1 个变成了 2 个，新启动的线程去执行 run 方法的代码，主线程继续向下执行，两个线程各自独立运行互不影响。</li><li>当 run 方法执行完毕后子线程结束，当 main 方法执行完毕后主线程结束。</li><li>两个线程执行没有明确的先后执行次序，由操作系统调度算法来决定。</li></ul><h2 id="线程的创建方式"><a href="#线程的创建方式" class="headerlink" title="线程的创建方式"></a>线程的创建方式</h2><h3 id="方式一：继承-Thread-类"><a href="#方式一：继承-Thread-类" class="headerlink" title="方式一：继承 Thread 类"></a>方式一：继承 Thread 类</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SubThread</span> <span class="keyword">extends</span> <span class="title class_">Thread</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">1</span>; i &lt; <span class="number">20</span>; i++) &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;SubThread 中的 i = &quot;</span> + i);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    <span class="comment">// 创建对象指向 Thread 类型的引用</span></span><br><span class="line">    <span class="type">Thread</span> <span class="variable">subThread</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SubThread</span>();</span><br><span class="line">    <span class="comment">// 启动线程 JVM 虚拟机会自动调用 run 方法</span></span><br><span class="line">    <span class="comment">// 不能直接调用 run 方法</span></span><br><span class="line">    subThread.start();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">1</span>; i &lt; <span class="number">20</span>; i++) &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;main 中的 i = &quot;</span> + i);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p><strong>结果</strong></p><blockquote><p>主线程和多线程交叉运行，互不影响</p></blockquote><p><img src="https://cdn.jsdelivr.net/gh/lzscxb/Picture/images/2354934-20210907235306852-1897726926.png" alt="image"></p><h3 id="方式二：实现-Runnable-接口"><a href="#方式二：实现-Runnable-接口" class="headerlink" title="方式二：实现 Runnable 接口"></a>方式二：实现 Runnable 接口</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SubThreadRun</span> <span class="keyword">implements</span> <span class="title class_">Runnable</span> &#123;	</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">1</span>; i &lt; <span class="number">20</span>; i++) &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;SubThreadRun 中的 i = &quot;</span> + i);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    <span class="comment">// 1. 创建自定义类型的对象，也就是实现 Runnable 接口类的对象</span></span><br><span class="line">    <span class="type">SubThreadRun</span> <span class="variable">subThreadRun</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SubThreadRun</span>();</span><br><span class="line">    <span class="comment">// 2. 使用对象作为参数构造 Thread 对象</span></span><br><span class="line">    <span class="type">Thread</span> <span class="variable">thread</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(subThreadRun);</span><br><span class="line">    <span class="comment">// 3. 使用 Thread 类型引用调用 start() 方法</span></span><br><span class="line">    <span class="comment">// 若使用 Runnable 引用构造了线程对象，调用该方法(run)时最终调用接口中的版本</span></span><br><span class="line">    thread.start();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">1</span>; i &lt; <span class="number">20</span>; i++) &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;SubThread 中的 i = &quot;</span> + i);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p><img src="https://cdn.jsdelivr.net/gh/lzscxb/Picture/images/2354934-20210908122042328-133925690.png" alt="image"></p><h2 id="方式的比较"><a href="#方式的比较" class="headerlink" title="方式的比较"></a>方式的比较</h2><ul><li>继承 Thread类的方式代码简单，但是若该类继承 Thread类后则无法继承其它类，而实现Runnable接口的方式代码复杂，但不影响该类继承其它类以及实现其它接口，因此以后的开发中推荐使用第二种方式。</li></ul><h2 id="匿名内部类的方式"><a href="#匿名内部类的方式" class="headerlink" title="匿名内部类的方式"></a>匿名内部类的方式</h2><ul><li>使用匿名内部类的方式来创建和启动线程。</li></ul><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SubThreadNoName</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 继承加匿名内部类的方式创建并启动线程</span></span><br><span class="line">        <span class="type">Thread</span> <span class="variable">tr1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;我是继承加匿名内部类的方式创建并启动线程&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        tr1.start();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 实现接口加匿名内部类的方式启动并创建的线程</span></span><br><span class="line">        <span class="type">Runnable</span> <span class="variable">ra</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Runnable</span>() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;方式一：我是实现接口加匿名内部类的方式启动并创建的线程&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="type">Thread</span> <span class="variable">tr2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(ra);</span><br><span class="line">        tr2.start();</span><br><span class="line"></span><br><span class="line">        <span class="type">Thread</span> <span class="variable">tr3</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(<span class="keyword">new</span> <span class="title class_">Runnable</span>() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;方式二：我是实现接口加匿名内部类的方式启动并创建的线程&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        tr3.start();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// lambda 表达式</span></span><br><span class="line">        <span class="type">Thread</span> <span class="variable">tr4</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(() -&gt; &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;方式三：我是实现接口加匿名内部类的方式启动并创建的线程&quot;</span>);</span><br><span class="line">        &#125;);</span><br><span class="line">        tr4.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure><h1 id="线程的生命周期"><a href="#线程的生命周期" class="headerlink" title="线程的生命周期"></a>线程的生命周期</h1><p><img src="https://cdn.jsdelivr.net/gh/lzscxb/Picture/images/2354934-20210909175722223-872128437.png" alt="image"></p><ul><li>新建状态 - 使用 new 关键字创建之后进入的状态，此时线程并没有开始执行。</li><li>就绪状态 - 调用 start 方法后进入的状态，此时程还是没有开始执行。</li><li>运行状态 - 使用线程调度器调用该线程后进入的状态，此时线程开始执行，当线程的时间片执行完毕后任务没有完成时回到就绪状态。</li><li>消亡状态 - 当线程的任务执行完成后进入的状态，此时线程已经终止。</li><li>阻塞状态 - 当线程执行的过程中发生了阻塞事件进入的状态，如：sleep方法。<br>阻塞状态解除后进入就绪状态。</li></ul><h2 id="线程的编号和名称"><a href="#线程的编号和名称" class="headerlink" title="线程的编号和名称"></a>线程的编号和名称</h2><table><thead><tr><th>方法声明</th><th>功能介绍</th></tr></thead><tbody><tr><td>long getId</td><td>获取调用对象所表示线程的编号</td></tr><tr><td>String getName()</td><td>获取调用对象所表示线程的名称</td></tr><tr><td>void setName(String name)</td><td>设置/修改线程的名称为参数指定的数值</td></tr><tr><td>static Thread currentThread()</td><td>获取当前正在执行线程的引用</td></tr></tbody></table><ul><li><p>继承的方式<br><img src="https://cdn.jsdelivr.net/gh/lzscxb/Picture/images/2354934-20210909182342689-62569610.png" alt="image"></p></li><li><p>实现接口的方式<br><img src="https://cdn.jsdelivr.net/gh/lzscxb/Picture/images/2354934-20210909182623186-1858634095.png" alt="image"></p></li></ul><h2 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法"></a>常用方法</h2><table><thead><tr><th>方法声明</th><th>功能介绍</th></tr></thead><tbody><tr><td>static void yield()</td><td>当前线程让出处理器(离开 Running状态),使当前线程进入 Runnable状态等待</td></tr><tr><td>static void sleep(times)</td><td>使当前线程从 Running 放弃处理器进入 Block 状态休眠 times毫秒,再返回到Runnable如果其他线程打断当前线程的 Block(sleep)就会发生InterruptedException</td></tr><tr><td>int getPriority()</td><td>获取线程的优先级</td></tr><tr><td>void setPriority(int newPriority)</td><td>修改线程的优先级。<br>优先级越高的线程不一定先执行,但该线程获取到时间片的机会会更多一些</td></tr><tr><td>void join()</td><td>等待该线程终止</td></tr><tr><td>void join(long millis)</td><td>等待参数指定的毫秒数</td></tr><tr><td>boolean isDaemono</td><td>用于判断是否为守护线程</td></tr><tr><td>setDaemon(boolean on)</td><td>用于设置线程为守护线程</td></tr></tbody></table><h3 id="sleep-方式的使用"><a href="#sleep-方式的使用" class="headerlink" title="sleep 方式的使用"></a>sleep 方式的使用</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.text.SimpleDateFormat;</span><br><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ThreadTest</span> <span class="keyword">extends</span> <span class="title class_">Thread</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">boolean</span> <span class="variable">flag</span> <span class="operator">=</span> <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">while</span> (flag) &#123;</span><br><span class="line">            <span class="comment">// 时间对象</span></span><br><span class="line">            <span class="type">Date</span> <span class="variable">date</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Date</span>();</span><br><span class="line">            <span class="comment">// 格式化时间</span></span><br><span class="line">            <span class="type">SimpleDateFormat</span> <span class="variable">sdf</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SimpleDateFormat</span>(<span class="string">&quot;yyyy-MM-dd HH:mm:ss&quot;</span>);</span><br><span class="line">            System.out.println(sdf.format(date));</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                sleep(<span class="number">1000</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">ThreadTest</span> <span class="variable">tr</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ThreadTest</span>();</span><br><span class="line">        tr.start();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            sleep(<span class="number">5000</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 停止线程</span></span><br><span class="line">        <span class="comment">// tr.stop(); // 已过时不推荐使用</span></span><br><span class="line">        tr.flag = <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure><h3 id="线程的管理"><a href="#线程的管理" class="headerlink" title="线程的管理"></a>线程的管理</h3><blockquote><p>修改线程的优先级。优先级越高的线程不一定先执行,但该线程获取到时间片的机会会更多一些</p></blockquote><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">![image](https://img2020.cnblogs.com/blog/2354934/202109/2354934-20210909190301006-11927860.png)</span><br></pre></td></tr></table></figure><h3 id="线程的等待"><a href="#线程的等待" class="headerlink" title="线程的等待"></a>线程的等待</h3><p><img src="https://cdn.jsdelivr.net/gh/lzscxb/Picture/images/2354934-20210909190840163-1405465489.png" alt="image"></p><h3 id="守护进程"><a href="#守护进程" class="headerlink" title="守护进程"></a>守护进程</h3><p><img src="https://cdn.jsdelivr.net/gh/lzscxb/Picture/images/2354934-20210909191258434-2056946550.png" alt="image"></p></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author:</span> <span class="post-copyright-info"><a href="https://www.lzscxb.cn">LzsCxb</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link:</span> <span class="post-copyright-info"><a href="https://www.lzscxb.cn/posts/3237902709.html">https://www.lzscxb.cn/posts/3237902709.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice:</span> <span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Java/">Java</a></div><div class="post_share"><div class="social-share" data-image="https://minio.lzscxb.cn/picture/images/typora/default_bg.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload='this.media="all"'><script src="https://cdn.jsdelivr.net/gh/overtrue/share.js@master/dist/js/social-share.min.js" defer="defer"></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/3031167880.html"><img class="prev-cover" src="https://minio.lzscxb.cn/picture/images/typora/default_bg.png" onerror='onerror=null,src="/img/404.jpg"' alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">Java-多线程同步机制</div></div></a></div><div class="next-post pull-right"><a href="/posts/3845166172.html"><img class="next-cover" src="https://minio.lzscxb.cn/picture/images/typora/default_bg.png" onerror='onerror=null,src="/img/404.jpg"' alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">Java-IO流</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/posts/1576613567.html" title="Java RSA非对称加密算法工具类和Jwt Toekn工具类"><img class="cover" src="https://cdn.jsdelivr.net/gh/lzscxb/Picture/images/image-20220211142725475.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-07-04</div><div class="title">Java RSA非对称加密算法工具类和Jwt Toekn工具类</div></div></a></div><div><a href="/posts/2889667683.html" title="Java 斐波那契数列的编程实现"><img class="cover" src="https://minio.lzscxb.cn/picture/images/typora/default_bg.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-08-22</div><div class="title">Java 斐波那契数列的编程实现</div></div></a></div><div><a href="/posts/1356001027.html" title="Java 生成随机 IP 地址"><img class="cover" src="https://minio.lzscxb.cn/picture/images/typora/default_bg.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-10-12</div><div class="title">Java 生成随机 IP 地址</div></div></a></div><div><a href="/posts/4229879530.html" title="Java-File类详解"><img class="cover" src="https://minio.lzscxb.cn/picture/images/typora/default_bg.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-09-05</div><div class="title">Java-File类详解</div></div></a></div><div><a href="/posts/3845166172.html" title="Java-IO流"><img class="cover" src="https://minio.lzscxb.cn/picture/images/typora/default_bg.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-09-07</div><div class="title">Java-IO流</div></div></a></div><div><a href="/posts/1115217775.html" title="Java-JDBC配置和使用"><img class="cover" src="https://minio.lzscxb.cn/picture/images/typora/default_bg.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-09-14</div><div class="title">Java-JDBC配置和使用</div></div></a></div></div></div><hr><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i> <span>Comment</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-number">1.</span> <span class="toc-text">基本概念</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E5%92%8C%E8%BF%9B%E7%A8%8B%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-number">1.1.</span> <span class="toc-text">程序和进程的概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-number">1.2.</span> <span class="toc-text">线程的概念</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%88%9B%E5%BB%BA"><span class="toc-number">2.</span> <span class="toc-text">线程的创建</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Thread%E7%B1%BB%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-number">2.1.</span> <span class="toc-text">Thread类的概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E6%96%B9%E5%BC%8F"><span class="toc-number">2.2.</span> <span class="toc-text">创建方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-number">2.3.</span> <span class="toc-text">相关的方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B"><span class="toc-number">2.4.</span> <span class="toc-text">执行流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%88%9B%E5%BB%BA%E6%96%B9%E5%BC%8F"><span class="toc-number">2.5.</span> <span class="toc-text">线程的创建方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E5%BC%8F%E4%B8%80%EF%BC%9A%E7%BB%A7%E6%89%BF-Thread-%E7%B1%BB"><span class="toc-number">2.5.1.</span> <span class="toc-text">方式一：继承 Thread 类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E5%BC%8F%E4%BA%8C%EF%BC%9A%E5%AE%9E%E7%8E%B0-Runnable-%E6%8E%A5%E5%8F%A3"><span class="toc-number">2.5.2.</span> <span class="toc-text">方式二：实现 Runnable 接口</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B9%E5%BC%8F%E7%9A%84%E6%AF%94%E8%BE%83"><span class="toc-number">2.6.</span> <span class="toc-text">方式的比较</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8C%BF%E5%90%8D%E5%86%85%E9%83%A8%E7%B1%BB%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="toc-number">2.7.</span> <span class="toc-text">匿名内部类的方式</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-number">3.</span> <span class="toc-text">线程的生命周期</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E7%9A%84%E7%BC%96%E5%8F%B7%E5%92%8C%E5%90%8D%E7%A7%B0"><span class="toc-number">3.1.</span> <span class="toc-text">线程的编号和名称</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95"><span class="toc-number">3.2.</span> <span class="toc-text">常用方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#sleep-%E6%96%B9%E5%BC%8F%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-number">3.2.1.</span> <span class="toc-text">sleep 方式的使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E7%9A%84%E7%AE%A1%E7%90%86"><span class="toc-number">3.2.2.</span> <span class="toc-text">线程的管理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E7%9A%84%E7%AD%89%E5%BE%85"><span class="toc-number">3.2.3.</span> <span class="toc-text">线程的等待</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B"><span class="toc-number">3.2.4.</span> <span class="toc-text">守护进程</span></a></li></ol></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2022 By LzsCxb</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="Scroll To Comments"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i> <span>Loading the Database</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"></div></div><hr><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (true){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'MLFHwQsVy8T94yf3CekJVLEY-gzGzoHsz',
+      appKey: 'VpK0SLV9ANnueJcFFTh16dx7',
+      avatar: 'monsterid',
+      serverURLs: 'https://mlfhwqsv.lc-cn-n1-shared.com',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script src="https://cdn.jsdelivr.net/npm/blueimp-md5/js/md5.min.js"></script><script>window.addEventListener('load', () => {
+  const changeContent = (content) => {
+    if (content === '') return content
+
+    content = content.replace(/<img.*?src="(.*?)"?[^\>]+>/ig, '[image]') // replace image link
+    content = content.replace(/<a[^>]+?href=["']?([^"']+)["']?[^>]*>([^<]+)<\/a>/gi, '[link]') // replace url
+    content = content.replace(/<pre><code>.*?<\/pre>/gi, '[code]') // replace code
+    content = content.replace(/<[^>]+>/g,"") // remove html tag
+
+    if (content.length > 150) {
+      content = content.substring(0,150) + '...'
+    }
+    return content
+  }
+
+  const getIcon = (icon, mail) => {
+    if (icon) return icon
+    let defaultIcon = '?d=monsterid'
+    let iconUrl = `https://gravatar.loli.net/avatar/${md5(mail.toLowerCase()) + defaultIcon}`
+    return iconUrl
+  }
+
+  const generateHtml = array => {
+    let result = ''
+
+    if (array.length) {
+      for (let i = 0; i < array.length; i++) {
+        result += '<div class=\'aside-list-item\'>'
+
+        if (true) {
+          const name = 'src'
+          result += `<a href='${array[i].url}' class='thumbnail'><img ${name}='${array[i].avatar}' alt='${array[i].nick}'></a>`
+        }
+
+        result += `<div class='content'>
+        <a class='comment' href='${array[i].url}' title='${array[i].content}'>${array[i].content}</a>
+        <div class='name'><span>${array[i].nick} / </span><time datetime="${array[i].date}">${btf.diffDate(array[i].date, true)}</time></div>
+        </div></div>`
+      }
+    } else {
+      result += 'No Comment'
+    }
+
+    let $dom = document.querySelector('#card-newest-comments .aside-list')
+    $dom.innerHTML= result
+    window.lazyLoadInstance && window.lazyLoadInstance.update()
+    window.pjax && window.pjax.refresh($dom)
+  }
+
+  const getComment = () => {
+    const serverURL = 'https://mlfhwqsv.lc-cn-n1-shared.com'
+
+    var settings = {
+      "method": "GET",
+      "headers": {
+        "X-LC-Id": 'MLFHwQsVy8T94yf3CekJVLEY-gzGzoHsz',
+        "X-LC-Key": 'VpK0SLV9ANnueJcFFTh16dx7',
+        "Content-Type": "application/json"
+      },
+    }
+
+    fetch(`${serverURL}/1.1/classes/Comment?limit=6&order=-createdAt`,settings)
+      .then(response => response.json())
+      .then(data => {
+        const valineArray = data.results.map(function (e) {
+          return {
+            'avatar': getIcon(e.QQAvatar, e.mail),
+            'content': changeContent(e.comment),
+            'nick': e.nick,
+            'url': e.url + '#' + e.objectId,
+            'date': e.updatedAt,
+          }
+        })
+        saveToLocal.set('valine-newest-comments', JSON.stringify(valineArray), 10/(60*24))
+        generateHtml(valineArray)
+      }).catch(e => {
+        const $dom = document.querySelector('#card-newest-comments .aside-list')
+        $dom.innerHTML= "Unable to get the data, please make sure the settings are correct."
+      }) 
+  }
+
+  const newestCommentInit = () => {
+    if (document.querySelector('#card-newest-comments .aside-list')) {
+      const data = saveToLocal.get('valine-newest-comments')
+      if (data) {
+        generateHtml(JSON.parse(data))
+      } else {
+        getComment()
+      }
+    }
+  }
+
+  newestCommentInit()
+  document.addEventListener('pjax:complete', newestCommentInit)
+})</script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
+  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
+
+  typeof preloader === 'object' && preloader.initLoading()
+  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script data-pjax>function butterfly_footer_beautify_injector_config(){var e=document.getElementById("footer-wrap");console.log("已挂载butterfly_footer_beautify"),e.insertAdjacentHTML("beforeend",'<p id="ghbdages"><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow noreferrer" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title=""><img src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&amp;logo=Claris" alt=""/></a><a class="github-badge" target="_blank" href="https://github.com/lzscxb/" rel="external nofollow noreferrer" style="margin-inline:5px" data-title="LzsCxb Github" title=""><img src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub" alt=""/></a><a class="github-badge" target="_blank" href="https://beian.miit.gov.cn" rel="external nofollow noreferrer" style="margin-inline:5px" data-title="本站已在工信部备案，备案号：桂ICP备2022003172号-1" title=""><img src="https://img.shields.io/badge/%E6%A1%82ICP%E5%A4%87-2022003172%E5%8F%B7--1-pink?color=ff69b4&amp;logo=data:image/png;base64,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" alt=""/></a></p>')}for(var elist="null".split(","),cpage=location.pathname,epage="all",flag=0,i=0;i<elist.length;i++)cpage.includes(elist[i])&&flag++;"all"===epage&&0==flag?butterfly_footer_beautify_injector_config():epage===cpage&&butterfly_footer_beautify_injector_config()</script></body></html>

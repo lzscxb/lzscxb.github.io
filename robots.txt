@@ -1,0 +1,17 @@
+User-agent: *
+Allow: /
+Allow: /archives/
+Allow: /about/
+Allow: /posts/
+
+Disallow: /vendors/
+Disallow: /js/
+Disallow: /css/
+Disallow: /fonts/
+Disallow: /vendors/
+Disallow: /tags/
+Disallow: /categories/
+
+
+Sitemap: https://www.lzscxb.cn/sitemap.xml
+Sitemap: https://www.lzscxb.cn/baidusitemap.xml

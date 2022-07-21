@@ -1,0 +1,310 @@
+<!DOCTYPE html><html lang="en_US" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><title>Hive HQL 之 DDL 数据表操作 | 白日醒梦</title><meta name="keywords" content="Hive"><meta name="author" content="LzsCxb"><meta name="copyright" content="LzsCxb"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Hive 数据类型普通数据类型Hive 类似和 Java 语言中一样，会支持多种不同长度的整型和浮点类型数据，同时也支持布尔类型、字符串类型，时间截数据类型以及二进制数组数据类型等。具体的如下表：    大类 类型    Integers(整型） TINYINT – 1字节的有符号整型SAMLINT – 2字节的有符号整型INT – 4字节的有符号整型BIGINT – 8字节的有符号整型   Fl"><meta property="og:type" content="article"><meta property="og:title" content="Hive HQL 之 DDL 数据表操作"><meta property="og:url" content="https://www.lzscxb.cn/posts/3488806694.html"><meta property="og:site_name" content="白日醒梦"><meta property="og:description" content="Hive 数据类型普通数据类型Hive 类似和 Java 语言中一样，会支持多种不同长度的整型和浮点类型数据，同时也支持布尔类型、字符串类型，时间截数据类型以及二进制数组数据类型等。具体的如下表：    大类 类型    Integers(整型） TINYINT – 1字节的有符号整型SAMLINT – 2字节的有符号整型INT – 4字节的有符号整型BIGINT – 8字节的有符号整型   Fl"><meta property="og:locale" content="en_US"><meta property="og:image" content="https://minio.lzscxb.cn/picture/images/typora/default_bg.png"><meta property="article:published_time" content="2021-11-16T01:44:00.000Z"><meta property="article:modified_time" content="2022-07-21T08:47:32.671Z"><meta property="article:author" content="LzsCxb"><meta property="article:tag" content="Hive"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://minio.lzscxb.cn/picture/images/typora/default_bg.png"><link rel="shortcut icon" href="https://minio.lzscxb.cn/picture/images/favicon.png"><link rel="canonical" href="https://www.lzscxb.cn/posts/3488806694"><link rel="preconnect" href="//cdn.jsdelivr.net"><link rel="preconnect" href="//hm.baidu.com"><link rel="preconnect" href="//busuanzi.ibruce.info"><meta name="google-site-verification" content="yxs-MDGXfaSf--WINcagRK2sgYnQkfmZ32vGrP_21DY"><meta name="baidu-site-verification" content="code-RMbIP73TrL"><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload='this.media="all"'><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload='this.media="all"'><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload='this.media="all"'><script>var _hmt=_hmt||[];!function(){var e=document.createElement("script");e.src="https://hm.baidu.com/hm.js?c21959a450b3af3a7a172860d40b96c9";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)}()</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"We didn't find any results for the search: ${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: 'days',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: {"limitCount":800,"languages":{"author":"Author: LzsCxb","link":"Link: ","source":"Source: 白日醒梦","info":"Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source."}},
+  lightbox: 'mediumZoom',
+  Snackbar: {"chs_to_cht":"Traditional Chinese Activated Manually","cht_to_chs":"Simplified Chinese Activated Manually","day_to_night":"Dark Mode Activated Manually","night_to_day":"Light Mode Activated Manually","bgLight":"#49b1f5","bgDark":"#121212","position":"top-center"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE={title:"Hive HQL 之 DDL 数据表操作",isPost:!0,isHome:!1,isHighlightShrink:!1,isToc:!0,postUpdate:"2022-07-21 16:47:32"}</script><noscript><style type="text/css">#nav{opacity:1}.justified-gallery img{opacity:1}#post-meta time,#recent-posts time{display:inline!important}</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.css" media="print" onload='this.media="all"'><meta name="generator" content="Hexo 6.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://minio.lzscxb.cn/picture/images/avatar.png" onerror='onerror=null,src="/img/friend_404.gif"' alt="avatar"></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">101</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">30</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">13</div></a></div><hr><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i> <span>Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i> <span>Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i> <span>Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i> <span>Categories</span></a></div><div class="menus_item"><a class="site-page" href="/message/"><i class="fa-fw fas fa-heart"></i> <span>Message</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i> <span>About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image:url(https://minio.lzscxb.cn/picture/images/typora/default_bg.png)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">白日醒梦</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i> <span>Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i> <span>Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i> <span>Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i> <span>Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i> <span>Categories</span></a></div><div class="menus_item"><a class="site-page" href="/message/"><i class="fa-fw fas fa-heart"></i> <span>Message</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i> <span>About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Hive HQL 之 DDL 数据表操作</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-11-16T01:44:00.000Z" title="Created 2021-11-16 09:44:00">2021-11-16</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2022-07-21T08:47:32.671Z" title="Updated 2022-07-21 16:47:32">2022-07-21</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/BigData/">BigData</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">Word count:</span><span class="word-count">1.8k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">Reading time:</span><span>7min</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Hive HQL 之 DDL 数据表操作"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="Hive-数据类型"><a href="#Hive-数据类型" class="headerlink" title="Hive 数据类型"></a>Hive 数据类型</h1><h2 id="普通数据类型"><a href="#普通数据类型" class="headerlink" title="普通数据类型"></a>普通数据类型</h2><p>Hive 类似和 Java 语言中一样，会支持多种不同长度的整型和浮点类型数据，同时也支持布尔类型、字符串类型，时间截数据类型以及二进制数组数据类型等。具体的如下表：</p><table><thead><tr><th>大类</th><th>类型</th></tr></thead><tbody><tr><td>Integers(整型）</td><td>TINYINT – 1字节的有符号整型<br>SAMLINT – 2字节的有符号整型<br>INT – 4字节的有符号整型<br>BIGINT – 8字节的有符号整型</td></tr><tr><td>Floating point numbers(浮点数）</td><td>FLOAT – 单精度浮点数<br>DOUBLE – 双精度浮点数</td></tr><tr><td>Fixed point numbers(定点数）</td><td>DECIMAL – 17字节，任意精度数字。通常用户自定义 decimal(12,6)</td></tr><tr><td>String(字符串）</td><td>STRING – 可指定字符集的不定长字符<br>VARCHAR – 1-65535长度的不定长字符串<br>CHAR – 1-255定长字符串</td></tr><tr><td>Datetime(时间日期类型）</td><td>STRTIMESTAMP – 时间戳(纳秒)<br>DATE – 时间日期类型</td></tr><tr><td>Boolean(布尔类型）</td><td>BOOLEAN – true/false</td></tr><tr><td>Binary types(二进制类型）</td><td>BINARY – 二进制字节序列</td></tr></tbody></table><h1 id="集合数据类型"><a href="#集合数据类型" class="headerlink" title="集合数据类型"></a>集合数据类型</h1><p>Hive 支持集合数据类型，包括array、map、struct、union</p><table><thead><tr><th>类型</th><th>描述</th><th>字面量示例</th></tr></thead><tbody><tr><td>ARRAY</td><td>有序的相同数据类型的集合</td><td>array(1,2)</td></tr><tr><td>MAP</td><td>key-value对。key必须是基本数据类型，value不限</td><td>map(‘a’,1, ‘b’, 2)</td></tr><tr><td>STRUCT</td><td>不同类型字段的集合。类似于C语言的结构 体</td><td>struct(‘1’,1,1.0),<br>named_struct(‘col1’,’1’,’col2’,1,’clo3’, 1.0)</td></tr><tr><td>UNION</td><td>不同类型的元素存储在同一字段的不同行</td><td>create_union(1,’a’,63)</td></tr></tbody></table><h1 id="内部表-amp-外部表"><a href="#内部表-amp-外部表" class="headerlink" title="内部表 &amp; 外部表"></a>内部表 &amp; 外部表</h1><p>在创建表的时候，可指定表的类型。表有两种类型，分别是内部表（管理表）、外部表。</p><ul><li>默认情况下，创建内部表。如果要创建外部表，需要使用关键字 <code>external</code></li><li>在删除内部表时，表的定义（元数据）和数据同时被删除</li><li>在删除外部表时，仅删除表的定义，数据被保留</li><li>在生产环境中，多使用外部表</li></ul><h2 id="内部表"><a href="#内部表" class="headerlink" title="内部表"></a>内部表</h2><p>t1.dat 文件内容</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ID 姓名 爱好 地址</span><br><span class="line">2;zhangsan;book,TV,code;beijing:chaoyang,shagnhai:pudong</span><br><span class="line">3;lishi;book,code;nanjing:jiangning,taiwan:taibei</span><br><span class="line">4;wangwu;music,book;heilongjiang:haerbin</span><br></pre></td></tr></table></figure><p>基于上面数据创建表 HQL</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">-- 创建内部表</span><br><span class="line">create table t1(</span><br><span class="line">    id int,</span><br><span class="line">    name string,</span><br><span class="line">    hobby array&lt;string&gt;,</span><br><span class="line">    addr map&lt;string, string&gt;</span><br><span class="line">)</span><br><span class="line">row format delimited</span><br><span class="line">fields terminated by &quot;;&quot;</span><br><span class="line">collection items terminated by &quot;,&quot;</span><br><span class="line">map keys terminated by &quot;:&quot;;</span><br><span class="line">-- 因为默认的分隔符号是 ^A ^B ^C 所以我们要指定分隔符号</span><br><span class="line"></span><br><span class="line">-- 显示表的定义，信息较少</span><br><span class="line">desc t1;</span><br><span class="line"></span><br><span class="line">-- 显示表的定义，详细</span><br><span class="line">desc formatted t1;</span><br><span class="line"></span><br><span class="line">-- 加载数据</span><br><span class="line">load data local inpath &#x27;/root/t1.dat&#x27; into table t1;</span><br><span class="line"></span><br><span class="line">-- 查询数据</span><br><span class="line">select * from t1;</span><br><span class="line"></span><br><span class="line">-- 查看数据文件</span><br><span class="line">dfs -ls /user/hive/warehouse/mydb.db/t1;</span><br><span class="line">dfs -cat /user/hive/warehouse/mydb.db/t1/t1.dat;</span><br><span class="line"></span><br><span class="line">-- 删除表，文件也一并删除</span><br><span class="line">drop table t1;</span><br></pre></td></tr></table></figure><h2 id="外部表"><a href="#外部表" class="headerlink" title="外部表"></a>外部表</h2><p>t2.dat 文件内容</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ID 姓名 爱好 地址</span><br><span class="line">2;zhangsan;book,TV,code;beijing:chaoyang,shagnhai:pudong</span><br><span class="line">3;lishi;book,code;nanjing:jiangning,taiwan:taibei</span><br><span class="line">4;wangwu;music,book;heilongjiang:haerbin</span><br></pre></td></tr></table></figure><p>基于上面数据创建表 HQL</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">-- 创建内部表</span><br><span class="line">create external table t2(</span><br><span class="line">    id int,</span><br><span class="line">    name string,</span><br><span class="line">    hobby array&lt;string&gt;,</span><br><span class="line">    addr map&lt;string, string&gt;</span><br><span class="line">)</span><br><span class="line">row format delimited</span><br><span class="line">fields terminated by &quot;;&quot;</span><br><span class="line">collection items terminated by &quot;,&quot;</span><br><span class="line">map keys terminated by &quot;:&quot;;</span><br><span class="line">-- 因为默认的分隔符号是 ^A ^B ^C 所以我们要指定分隔符号</span><br><span class="line"></span><br><span class="line">-- 显示表的定义，信息较少</span><br><span class="line">desc t2;</span><br><span class="line"></span><br><span class="line">-- 显示表的定义，详细</span><br><span class="line">desc formatted t2;</span><br><span class="line"></span><br><span class="line">-- 加载数据</span><br><span class="line">load data local inpath &#x27;/root/t2.dat&#x27; into table t2;</span><br><span class="line"></span><br><span class="line">-- 查询数据</span><br><span class="line">select * from t2;</span><br><span class="line"></span><br><span class="line">-- 查看数据文件</span><br><span class="line">dfs -ls /user/hive/warehouse/mydb.db/t2;</span><br><span class="line">dfs -cat /user/hive/warehouse/mydb.db/t2/t2.dat;</span><br><span class="line"></span><br><span class="line">-- 删除表，文件不会被删除</span><br><span class="line">drop table t2;</span><br><span class="line"></span><br><span class="line">-- 再次查询数据文件，仍然存在</span><br></pre></td></tr></table></figure><h2 id="内部表与外部表的转换"><a href="#内部表与外部表的转换" class="headerlink" title="内部表与外部表的转换"></a>内部表与外部表的转换</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">-- 内部表转外部表</span><br><span class="line">alter table t1 set tblproperties(&#x27;EXTERNAL&#x27;=&#x27;TRUE&#x27;);</span><br><span class="line">-- 查看表信息，是否转换成功</span><br><span class="line">desc formatted t1;</span><br><span class="line"></span><br><span class="line">-- 外部表转内部表</span><br><span class="line">alter table t1 set tblproperties(&#x27;EXTERNAL&#x27;=&#x27;FALSE&#x27;);</span><br></pre></td></tr></table></figure><h1 id="分区表"><a href="#分区表" class="headerlink" title="分区表"></a>分区表</h1><p>Hive在执行查询时，一般会扫描整个表的数据。由于表的数据量大，全表扫描消耗时间长、效率低。<br>而有时候，查询只需要扫描表中的一部分数据即可，Hive引入了分区表的概念，将表的数据存储在不同的子目录中，每一个子目录对应一个分区。只查询部分分区数据时，可避免全表扫描，提高查询效率。<br>在实际中，通常根据时间、地区等信息进行分区。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">-- 创建通过 日期字符串 分区的表</span><br><span class="line">create external table t3(</span><br><span class="line">    id int,</span><br><span class="line">    name string,</span><br><span class="line">    hobby array&lt;string&gt;,</span><br><span class="line">    addr map&lt;string, string&gt;</span><br><span class="line">)</span><br><span class="line">partitioned by (dt string)</span><br><span class="line">row format delimited</span><br><span class="line">fields terminated by &quot;;&quot;</span><br><span class="line">collection items terminated by &quot;,&quot;</span><br><span class="line">map keys terminated by &quot;:&quot;;</span><br><span class="line"></span><br><span class="line">-- 加载数据</span><br><span class="line">load data local inpath &#x27;/root/t1.dat&#x27; into table t3 partition(dt=&quot;2021-11-16&quot;);</span><br><span class="line">load data local inpath &#x27;/root/t1.dat&#x27; into table t3 partition(dt=&quot;2021-11-17&quot;);</span><br><span class="line"></span><br><span class="line">-- 查看分区</span><br><span class="line">show partitions t3;</span><br><span class="line"></span><br><span class="line">-- 增加分区</span><br><span class="line">alter table t3 add partition(dt=&quot;2021-11-18&quot;)  partition(dt=&quot;2021-11-19&quot;);</span><br><span class="line"></span><br><span class="line">-- 删除分区</span><br><span class="line">alter table t3 drop partition(dt=&#x27;2021-11-18&#x27;);</span><br></pre></td></tr></table></figure><p><font color="red">备注：分区字段不是表中已经存在的数据，可以将分区字段看成伪列</font></p><h1 id="分桶表"><a href="#分桶表" class="headerlink" title="分桶表"></a>分桶表</h1><p>当单个的分区或者表的数据量过大，分区不能更细粒度的划分数据，就需要使用分桶技术将数据划分成更细的粒度。将数据按照指定的字段进行分成多个桶中去，即将数据按照字段进行划分，数据按照字段划分到多个文件当中去。<br>分桶的原理：</p><ul><li>MR中：key.hashCode % reductTask</li><li>Hive中：分桶字段.hashCode % 分桶个数</li></ul><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">-- 测试数据</span><br><span class="line">1	java	90</span><br><span class="line">1	C	78</span><br><span class="line">1	python	91</span><br><span class="line">1	hadoop	80</span><br><span class="line">2	java	75</span><br><span class="line">2	C	76</span><br><span class="line">2 	python	80</span><br><span class="line">2	hadoop	93</span><br><span class="line">3	java	98</span><br><span class="line">3	C	74</span><br><span class="line">3	python	89</span><br><span class="line">3	hadoop	91</span><br><span class="line">5	java	93</span><br><span class="line">6	c	76</span><br><span class="line">7	python	87</span><br><span class="line">8	hadoop	88</span><br></pre></td></tr></table></figure><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">-- 创建分桶表</span><br><span class="line">create table course(</span><br><span class="line">    id int,</span><br><span class="line">    name string,</span><br><span class="line">    score int</span><br><span class="line">)</span><br><span class="line">clustered by (id) into 3 buckets</span><br><span class="line">row format delimited fields terminated by &quot;\t&quot;;</span><br><span class="line"></span><br><span class="line">-- 创建普通表</span><br><span class="line">create table course_common(</span><br><span class="line">    id int,</span><br><span class="line">    name string,</span><br><span class="line">    score int</span><br><span class="line">)</span><br><span class="line">row format delimited fields terminated by &quot;\t&quot;;</span><br><span class="line"></span><br><span class="line">-- 给普通表增加数据</span><br><span class="line">load data local inpath &#x27;/root/course.dat&#x27; into table course_common;</span><br><span class="line"></span><br><span class="line">-- 需要通过 insert ... select 给桶加数据</span><br><span class="line">insert into table course select * from course_common;</span><br><span class="line"></span><br><span class="line">-- 查看分桶数据 数据按照：(分区字段.hashCode)%(分桶数）进行分区</span><br><span class="line">desc formatted course;</span><br><span class="line">dfs -ls /user/hive/warehouse/mydb.db/course;</span><br></pre></td></tr></table></figure><p><img src="https://img2020.cnblogs.com/blog/2354934/202111/2354934-20211116173654324-217337569.png" alt="image"></p><p>备注：</p><ol><li>分桶规则：分桶字段.hashCode%分桶数</li><li>分桶表加载数据时，使用insert…select…方式进行</li><li>网上有资料说要使用分区表需要设置hive.enforce.bucketing=true,那是Hive1.x以前的版本；<br>Hive2.x中，删除了该参数，始终可以分桶；</li></ol><h1 id="修改表-amp-删除表"><a href="#修改表-amp-删除表" class="headerlink" title="修改表 &amp; 删除表"></a>修改表 &amp; 删除表</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">-- 修改表名。rename</span><br><span class="line">alter table course_common</span><br><span class="line">rename to course_commonl;</span><br><span class="line"></span><br><span class="line">-- 修改列名。change column</span><br><span class="line">alter table course_common1</span><br><span class="line">change column id cid int;</span><br><span class="line"></span><br><span class="line">--修改字段类型。change column</span><br><span class="line">alter table course_common1</span><br><span class="line">change column cid cid string;</span><br><span class="line"></span><br><span class="line">-- The following columns have types incompatible with the existing columns in their</span><br><span class="line">respective positions</span><br><span class="line">--修改字段数据类型时，要满足数据类型转换的要求。如int可以转为string,但是string不能转为int</span><br><span class="line"></span><br><span class="line">--增加字段。add columns</span><br><span class="line">alter table course_common1</span><br><span class="line">add columns (common string);</span><br><span class="line"></span><br><span class="line">--删除字段：replace columns</span><br><span class="line">--这里仅仅只是在元数据中删除了字段，并没有改动hdfs上的数据文件</span><br><span class="line">alter table course_common1</span><br><span class="line">replace columns(</span><br><span class="line">id string, cname string, score int);</span><br><span class="line"></span><br><span class="line">--删除表</span><br><span class="line">drop table course_common1;</span><br></pre></td></tr></table></figure></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author:</span> <span class="post-copyright-info"><a href="https://www.lzscxb.cn">LzsCxb</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link:</span> <span class="post-copyright-info"><a href="https://www.lzscxb.cn/posts/3488806694.html">https://www.lzscxb.cn/posts/3488806694.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice:</span> <span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Hive/">Hive</a></div><div class="post_share"><div class="social-share" data-image="https://minio.lzscxb.cn/picture/images/typora/default_bg.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload='this.media="all"'><script src="https://cdn.jsdelivr.net/gh/overtrue/share.js@master/dist/js/social-share.min.js" defer="defer"></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/2461453837.html"><img class="prev-cover" src="https://minio.lzscxb.cn/picture/images/typora/default_bg.png" onerror='onerror=null,src="/img/404.jpg"' alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">HiveServer2 服务端配置</div></div></a></div><div class="next-post pull-right"><a href="/posts/1114713646.html"><img class="next-cover" src="https://minio.lzscxb.cn/picture/images/typora/default_bg.png" onerror='onerror=null,src="/img/404.jpg"' alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">Hive 的安装与配置</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/posts/1114713646.html" title="Hive 的安装与配置"><img class="cover" src="https://minio.lzscxb.cn/picture/images/typora/default_bg.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-11-15</div><div class="title">Hive 的安装与配置</div></div></a></div><div><a href="/posts/2461453837.html" title="HiveServer2 服务端配置"><img class="cover" src="https://minio.lzscxb.cn/picture/images/typora/default_bg.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-11-21</div><div class="title">HiveServer2 服务端配置</div></div></a></div><div><a href="/posts/2339088039.html" title="Hue 交互工具安装并与Hdfs、Hive集成"><img class="cover" src="https://minio.lzscxb.cn/picture/images/typora/default_bg.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-11-21</div><div class="title">Hue 交互工具安装并与Hdfs、Hive集成</div></div></a></div></div></div><hr><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i> <span>Comment</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Hive-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.</span> <span class="toc-text">Hive 数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%99%AE%E9%80%9A%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.1.</span> <span class="toc-text">普通数据类型</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%9B%86%E5%90%88%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-number">2.</span> <span class="toc-text">集合数据类型</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%86%85%E9%83%A8%E8%A1%A8-amp-%E5%A4%96%E9%83%A8%E8%A1%A8"><span class="toc-number">3.</span> <span class="toc-text">内部表 &amp; 外部表</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E9%83%A8%E8%A1%A8"><span class="toc-number">3.1.</span> <span class="toc-text">内部表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%96%E9%83%A8%E8%A1%A8"><span class="toc-number">3.2.</span> <span class="toc-text">外部表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E9%83%A8%E8%A1%A8%E4%B8%8E%E5%A4%96%E9%83%A8%E8%A1%A8%E7%9A%84%E8%BD%AC%E6%8D%A2"><span class="toc-number">3.3.</span> <span class="toc-text">内部表与外部表的转换</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%86%E5%8C%BA%E8%A1%A8"><span class="toc-number">4.</span> <span class="toc-text">分区表</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%86%E6%A1%B6%E8%A1%A8"><span class="toc-number">5.</span> <span class="toc-text">分桶表</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E8%A1%A8-amp-%E5%88%A0%E9%99%A4%E8%A1%A8"><span class="toc-number">6.</span> <span class="toc-text">修改表 &amp; 删除表</span></a></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2022 By LzsCxb</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="Scroll To Comments"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i> <span>Loading the Database</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"></div></div><hr><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (true){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'MLFHwQsVy8T94yf3CekJVLEY-gzGzoHsz',
+      appKey: 'VpK0SLV9ANnueJcFFTh16dx7',
+      avatar: 'monsterid',
+      serverURLs: 'https://mlfhwqsv.lc-cn-n1-shared.com',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script src="https://cdn.jsdelivr.net/npm/blueimp-md5/js/md5.min.js"></script><script>window.addEventListener('load', () => {
+  const changeContent = (content) => {
+    if (content === '') return content
+
+    content = content.replace(/<img.*?src="(.*?)"?[^\>]+>/ig, '[image]') // replace image link
+    content = content.replace(/<a[^>]+?href=["']?([^"']+)["']?[^>]*>([^<]+)<\/a>/gi, '[link]') // replace url
+    content = content.replace(/<pre><code>.*?<\/pre>/gi, '[code]') // replace code
+    content = content.replace(/<[^>]+>/g,"") // remove html tag
+
+    if (content.length > 150) {
+      content = content.substring(0,150) + '...'
+    }
+    return content
+  }
+
+  const getIcon = (icon, mail) => {
+    if (icon) return icon
+    let defaultIcon = '?d=monsterid'
+    let iconUrl = `https://gravatar.loli.net/avatar/${md5(mail.toLowerCase()) + defaultIcon}`
+    return iconUrl
+  }
+
+  const generateHtml = array => {
+    let result = ''
+
+    if (array.length) {
+      for (let i = 0; i < array.length; i++) {
+        result += '<div class=\'aside-list-item\'>'
+
+        if (true) {
+          const name = 'src'
+          result += `<a href='${array[i].url}' class='thumbnail'><img ${name}='${array[i].avatar}' alt='${array[i].nick}'></a>`
+        }
+
+        result += `<div class='content'>
+        <a class='comment' href='${array[i].url}' title='${array[i].content}'>${array[i].content}</a>
+        <div class='name'><span>${array[i].nick} / </span><time datetime="${array[i].date}">${btf.diffDate(array[i].date, true)}</time></div>
+        </div></div>`
+      }
+    } else {
+      result += 'No Comment'
+    }
+
+    let $dom = document.querySelector('#card-newest-comments .aside-list')
+    $dom.innerHTML= result
+    window.lazyLoadInstance && window.lazyLoadInstance.update()
+    window.pjax && window.pjax.refresh($dom)
+  }
+
+  const getComment = () => {
+    const serverURL = 'https://mlfhwqsv.lc-cn-n1-shared.com'
+
+    var settings = {
+      "method": "GET",
+      "headers": {
+        "X-LC-Id": 'MLFHwQsVy8T94yf3CekJVLEY-gzGzoHsz',
+        "X-LC-Key": 'VpK0SLV9ANnueJcFFTh16dx7',
+        "Content-Type": "application/json"
+      },
+    }
+
+    fetch(`${serverURL}/1.1/classes/Comment?limit=6&order=-createdAt`,settings)
+      .then(response => response.json())
+      .then(data => {
+        const valineArray = data.results.map(function (e) {
+          return {
+            'avatar': getIcon(e.QQAvatar, e.mail),
+            'content': changeContent(e.comment),
+            'nick': e.nick,
+            'url': e.url + '#' + e.objectId,
+            'date': e.updatedAt,
+          }
+        })
+        saveToLocal.set('valine-newest-comments', JSON.stringify(valineArray), 10/(60*24))
+        generateHtml(valineArray)
+      }).catch(e => {
+        const $dom = document.querySelector('#card-newest-comments .aside-list')
+        $dom.innerHTML= "Unable to get the data, please make sure the settings are correct."
+      }) 
+  }
+
+  const newestCommentInit = () => {
+    if (document.querySelector('#card-newest-comments .aside-list')) {
+      const data = saveToLocal.get('valine-newest-comments')
+      if (data) {
+        generateHtml(JSON.parse(data))
+      } else {
+        getComment()
+      }
+    }
+  }
+
+  newestCommentInit()
+  document.addEventListener('pjax:complete', newestCommentInit)
+})</script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
+  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
+
+  typeof preloader === 'object' && preloader.initLoading()
+  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script data-pjax>function butterfly_footer_beautify_injector_config(){var e=document.getElementById("footer-wrap");console.log("已挂载butterfly_footer_beautify"),e.insertAdjacentHTML("beforeend",'<p id="ghbdages"><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow noreferrer" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title=""><img src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&amp;logo=Claris" alt=""/></a><a class="github-badge" target="_blank" href="https://github.com/lzscxb/" rel="external nofollow noreferrer" style="margin-inline:5px" data-title="LzsCxb Github" title=""><img src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub" alt=""/></a><a class="github-badge" target="_blank" href="https://beian.miit.gov.cn" rel="external nofollow noreferrer" style="margin-inline:5px" data-title="本站已在工信部备案，备案号：桂ICP备2022003172号-1" title=""><img src="https://img.shields.io/badge/%E6%A1%82ICP%E5%A4%87-2022003172%E5%8F%B7--1-pink?color=ff69b4&amp;logo=data:image/png;base64,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" alt=""/></a></p>')}for(var elist="null".split(","),cpage=location.pathname,epage="all",flag=0,i=0;i<elist.length;i++)cpage.includes(elist[i])&&flag++;"all"===epage&&0==flag?butterfly_footer_beautify_injector_config():epage===cpage&&butterfly_footer_beautify_injector_config()</script></body></html>
